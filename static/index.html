@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+     <!-- <link rel="icon" href="../../favicon.ico"> -->
+     <title>Flask Template </title>
+     <!-- Bootstrap core CSS -->
+     <link href="{{ url_for('static', filename='styles/bootstrap.min.css') }}" rel="stylesheet">
+     <!-- Font Style import -->
+     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+     <!-- Custom styles for this template -->
+     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+ </head>
+
+ <body>
+
+    <nav class="navbar  navbar-dark bg-primary navbar-fixed-top navbar-expand-lg">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"> Welcome To Dream Home Real Estate</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+            </li>
+            <li class="nav-item">
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id='loginComponent' class="container">
+        <div class='row'>
+            <div id='loginDiv' class="col-md-6">
+                <form class="form-signin" id='formLogin' role="form">
+                    <h2>Customer Login </h2>
+                    <input type="login-username" name="login-username" class="form-control" placeholder="Username" required autofocus value="">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required value="">
+                    <span id='errorMessageLogin'></span>
+                    <button id="Login" class="btn btn-lg btn-primary btn-block" type="button">Login</button>
+                </form>
+            </div>
+            <div id='registerDiv' class="col-md-6">
+                <form class="form-signin" id='formRegister' role="form">
+                    <h2>Customer Registration </h2>
+                    <input type="email" name="emailreg" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="password" name="passwordreg" class="form-control" placeholder="Password" required>
+                    <input type="password" name="passwordconfreg" class="form-control" placeholder="Confirm Password" required>
+                    <input type="name" name="name" class="form-control" placeholder="Full Name" required autofocus>
+                    <input type="address" name="address" class="form-control" placeholder="Address" required autofocus>
+                    <input type="telephone" name="telephone" class="form-control" placeholder="Telephone" required autofocus>
+                    <span id='errorMessageReg'></span>
+                    <button id="Register" class="btn btn-lg btn-primary btn-block" type="button">Register</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div id='loginDivAgent' class="col-md-6">
+                <form class="form-signin" id='formLoginAgent' role="form">
+                    <h2>Agent Login </h2>
+                    <input type="login-username-agent" name="login-username-agent" class="form-control" placeholder="Username" required autofocus value="">
+                    <input type="password-agent" name="password-agent" class="form-control" placeholder="Password" required value="">
+                    <span id='errorMessageLoginAgent'></span>
+                    <button id="LoginAgent" class="btn btn-lg btn-primary btn-block" type="button">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-3">Content 1</div>
+        <div class="col-md-3">Content 2</div>
+        <div class="col-md-3">Content 3</div>
+        <div class="col-md-3">Content 4</div>
+    </div> -->
+    <div id='homeComponent'>
+        <!--<script src="{{ url_for('static', filename='js/home.js') }}"></script>-->
+        <div class="container">
+            <div class="row">
+                <h1 id="Dashboardgreeting">Welcome to Dream Home Real Estate&nbsp;</h1>
+            </div>
+
+            <div class="'row">
+                <p> Please select from one of the below options. </p>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><button id="searchRent" onclick="searchRent()" class="btn btn-lg btn-primary btn-block" type="button">Search for a Rental</button></th>
+                            <th><button id="searchSale" onclick="searchSale()" class="btn btn-lg btn-primary btn-block" type="button">Search for a Home For Sale</button></th>
+                            <th><button id="faveSale" class="btn btn-lg btn-primary btn-block" type="button">Favorite For Sale Homes</button> </th>
+                            <th><button id="faveRent" class="btn btn-lg btn-primary btn-block" type="button">Favorite Rental Homes</button> </th>
+                        </tr>
+                    <tr>
+                       <th><button id="addFave" class="btn btn-lg btn-primary btn-block" type="button">Add To Favorites</button> </th>
+                            <th><button id="logoutC" class="btn btn-lg btn-primary btn-block" type="button">Logout</button> </th>
+                    </tr>
+                    </thead>
+                    <tbody id='LinksTable'>
+                    </tbody>
+                </table>
+            </div>
+            <hr width="100%">
+            </div>
+        </div>
+
+    <div id='homeComponentAgent' class="container">
+        <div class="row">
+            <h1 id="DashboardgreetingAgent">Welcome to Dream Home Real Estate&nbsp;</h1>
+        </div>
+
+        <div class="'row">
+            <p> Please select from one of the below options. </p>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><button id="AddRental" class="btn btn-lg btn-primary btn-block" type="button">Add Rental</button> </th>
+                        <th><button id="AddSale" class="btn btn-lg btn-primary btn-block" type="button">Add For Sale</button> </th>
+                        <th><button id="listRent" class="btn btn-lg btn-primary btn-block" type="button">List of Rentals</button> </th>
+                        <th><button id="listSale" class="btn btn-lg btn-primary btn-block" type="button">List of Sale</button> </th>
+                        <th><button id="custView" class="btn btn-lg btn-primary btn-block" type="button">List of Customers</button> </th>
+                        <th><button id="deleteProb" class="btn btn-lg btn-primary btn-block" type="button">Delete Property</button> </th>
+                        <th><button id="logoutA" class="btn btn-lg btn-primary btn-block" type="button">Logout</button> </th>
+                    </tr>
+                </thead>
+                <tbody id='LinksTableAgent'>
+                </tbody>
+            </table>
+        </div>
+            <hr width="100%">
+    </div>
+
+    <div id='AddRentalComp' class="container">
+        <div class="row">
+            <h3 id="addRentalHeading">Input the below information to add a rental property.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <div id='addRentalDiv' class="col-md-9">
+                <form class="form-signin" id='formAddRental' role="form">
+                    <input id='add-address' type="add-address" name="add-address" class="form-control" placeholder="Add Street Address" required autofocus value="">
+                    <input id='add-city' type="add-city" name="add-city" class="form-control" placeholder="City Name" required value="">
+                    <input id='add-state' type="add-state" name="add-state" class="form-control" placeholder="State Name" required value="">
+                    <input id='add-zipcode' type="add-zipcode" name="add-zipcode" class="form-control" placeholder="5 digit zipcode" required value="">
+                    <input id='add-bedroom' type="add-bedroom" name="add-bedroom" class="form-control" placeholder="Number of Bedrooms" required value="">
+                    <input id='add-bathroom' type="add-bathroom" name="add-bathroom" class="form-control" placeholder="Number of Bathrooms" required value="">
+                    <input id='add-year' type="add-year" name="add-year" class="form-control" placeholder="Year Built" required value="">
+                    <input id='add-type' type="add-type" name="add-type" class="form-control" placeholder="House type(eg: single family)" required value="">
+                    <input id='add-occNum' type="add-occNum" name="add-occNum" class="form-control" placeholder="Number of Occupants" required value="">
+                    <input id="add-area" type="add-area" name="add-area" class="form-control" placeholder="Area" required value="">
+                    <input id='add-price' type="add-price" name="add-price" class="form-control" placeholder="Monthly Rental Cost" required value="">
+                    <p> Vacancy date: </p>
+                    <input id="add-vacDate" type ='date' type="add-vacDate" name="add-vacDate" value ="Vacancy Date" class="form-control" placeholder="Vacancy Date" required value="">
+                    <input id="add-pet" type="add-pet" name="add-pet" class="form-control" placeholder="Pets Allowed? - type in yes or no" required value="">
+                    <input id='add-leaseType' type="add-leaseType" name="add-leaseType" class="form-control" placeholder="Lease Type(1 year, month to month)" required value="">
+                    <input id="add-descrip" type="add-descrip" name="add-descrip" class="form-control" placeholder="Short Description(200 characters)" required value="">
+                    <span id='errorMessageAddRent'></span>
+                    <button id="submitRental" class="btn btn-lg btn-primary btn-block" type="button">Add Rental</button>
+                </form>
+            </div>
+        </div>
+            <hr width="100%">
+    </div>
+
+ <div id='AddSaleComp' class="container">
+        <div class="row">
+            <h3 id="addSaleHeading">Input the below information to add a for sale property.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <div id='addSaleDiv' class="col-md-9">
+                <form class="form-signin" id='formAddSale' role="form">
+                    <input id='add-saddress' type="add-saddress" name="add-saddress" class="form-control" placeholder="Add Street Address" required autofocus value="">
+                    <input id='add-scity' type="add-scity" name="add-scity" class="form-control" placeholder="City Name" required value="">
+                    <input id='add-sstate' type="add-sstate" name="add-sstate" class="form-control" placeholder="State Name" required value="">
+                    <input id='add-szipcode' type="add-szipcode" name="add-szipcode" class="form-control" placeholder="5 digit zipcode" required value="">
+                    <input id='add-sbedroom' type="add-sbedroom" name="add-sbedroom" class="form-control" placeholder="Number of Bedrooms" required value="">
+                    <input id='add-sbathroom' type="add-sbathroom" name="add-sbathroom" class="form-control" placeholder="Number of Bathrooms" required value="">
+                    <input id='add-syear' type="add-syear" name="add-syear" class="form-control" placeholder="Year Built" required value="">
+                    <input id='add-stype' type="add-stype" name="add-stype" class="form-control" placeholder="House type(eg: single family)" required value="">
+                    <input id='add-yearTax' type="add-yearTax" name="add-yearTax" class="form-control" placeholder="Yearly Tax" required value="">
+                    <input id="add-sarea" type="add-sarea" name="add-sarea" class="form-control" placeholder="Area" required value="">
+                    <input id='add-sprice' type="add-sprice" name="add-sprice" class="form-control" placeholder="Price" required value="">
+                    <p> Date Last Sold date: </p>
+                    <input id="add-lastSold" type ='date' type="add-lastSold" name="add-lastSold" value ="Last Sold" class="form-control" placeholder="Last Sold" required value="">
+                    <input id="add-sdescrip" type="add-descrip" name="add-descrip" class="form-control" placeholder="Short Description(200 characters)" required value="">
+                    <span id='errorMessageAddSale'></span>
+                    <button id="submitSale" class="btn btn-lg btn-primary btn-block" type="button">Add For Sale</button>
+                </form>
+            </div>
+        </div>
+            <hr width="100%">
+    </div>
+
+ <div id='listRental' class="container">
+        <div class="row">
+            <h3 id="listRentHeading">Below is a list of rental properties that you are managing.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Vacancy Date</th>
+                    </tr>
+                </thead>
+                    <tbody id='eventTableBody'>
+                    </tbody>
+            </table>
+            <p id="listError"></p>
+            </div>
+            <hr width="100%">
+    </div>
+
+    <div id='deleteProp' class="container">
+        <div class="row">
+            <h3 id="deleteHeading">Enter the Listing number for the property to be deleted.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <div id='delSaleDiv' class="col-md-9">
+                <form class="form-signin" id='formDelSale' role="form">
+                    <input id='del-listNum' type="del-listNum" name="del-listNum" class="form-control" placeholder="Enter Listing Number" required autofocus value="">
+                    <span id='errorMessageDel'></span>
+                    <button id="delPropButton" class="btn btn-lg btn-primary btn-block" type="button">Delete Property</button>
+                </form>
+            </div>
+        </div>
+            <hr width="100%">
+    </div>
+
+ <div id='listRentFave' class="container">
+        <div class="row">
+            <h3 id="listRentFaveHead">Below is a list of rental properties that you liked.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Vacancy Date</th>
+                        <th scope="col">Agent Email</th>
+                        <th scope="col">Agent #</th>
+                    </tr>
+                </thead>
+                    <tbody id='eventTableBodylikesFave'>
+                    </tbody>
+            </table>
+            <p id="listfaveRentError"></p>
+            </div>
+            <hr width="100%">
+    </div>
+
+ <div id='listSaleFave' class="container">
+        <div class="row">
+            <h3 id="listSaleFaveHead">Below is a list of for sale properties that you liked.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Last Sold Date</th>
+                        <th scope="col">Yearly Tax</th>
+                        <th scope="col">Agent Email</th>
+                        <th scope="col">Agent #</th>
+                    </tr>
+                </thead>
+                    <tbody id='eventTableBodylikesFaveSale'>
+                    </tbody>
+            </table>
+            <p id="listfaveSaleError"></p>
+            </div>
+            <hr width="100%">
+    </div>
+
+ <div id='listSaleDiv' class="container">
+        <div class="row">
+            <h3 id="listSaleHeading">Below is a list of for sale properties that you are managing.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Vacancy Date</th>
+                        <th scope="col">Tax</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                    <tbody id='eventTableListSaleBody'>
+                    </tbody>
+            </table>
+            <p id="listSaleError"></p>
+            </div>
+            <hr width="100%">
+    </div>
+
+ <div id='listCustDiv' class="container">
+        <div class="row">
+            <h3 id="listCustHeading">Below is a list of customers you are managing.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Listing Address</th>
+                        <th scope="col">Listing city</th>
+                        <th scope="col">State</th>
+                        <th scope="col">zipcode</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telephone</th></tr>
+                </thead>
+                    <tbody id='eventTableListCustBody'>
+                    </tbody>
+            </table>
+            <p id="listCustError"></p>
+            </div>
+            <hr width="100%">
+    </div>
+ <div class="container">
+    <div id="searchbox">
+        <div class="row">
+            <div class="col-xs-10">
+                <h2>Search Criteria</h2>
+            </div>
+            <div class="col-xs-2">
+                <button onclick="clrParams(qers)" class="btn btn-default">Clear</button>
+                <button id="searchButton" onclick="search()" class="btn btn-success">Search</button>
+            </div>
+        </div>
+        <div id="params"></div>
+        <div id="dropdown1"></div>
+        <div id="dropdown2"></div>
+    </div>
+ </div>
+
+ <div id="findRent" class="container">
+     <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Vacancy Date</th>
+                    </tr>
+                </thead>
+                    <tbody id='searchRentTable'>
+                    </tbody>
+            </table>
+            <p id="searchRentError"></p>
+            </div>
+ </div>
+
+ <div id="findSale" class="container">
+     <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Listing #</th>
+                        <th scope="col">Address Line</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Bedroom</th>
+                        <th scope="col">Bathroom</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Last Sold Date</th>
+                        <th scope="col">Yearly Tax</th>
+                    </tr>
+                </thead>
+                    <tbody id='searchSaleTable'>
+                    </tbody>
+            </table>
+            <p id="searchSaleError"></p>
+     </div>
+ </div>
+
+ <div id='addToFave' class="container">
+        <div class="row">
+            <h3 id="AddToFaveHeader">Enter the Listing number for the property to be added to favorites.&nbsp;</h3>
+        </div>
+        <div class="row">
+            <div id='addFaveDiv' class="col-md-9">
+                <form class="form-signin" id='addFaveInput' role="form">
+                    <input id='addfavelistNum' type="addfavelistNum" name="addfavelistNum" class="form-control" placeholder="Enter Listing Number" required autofocus value="">
+                    <span id='errorMessageFave'></span>
+                    <button id="AddFaveButton" class="btn btn-lg btn-primary btn-block" type="button">Add To Favorites</button>
+                </form>
+            </div>
+        </div>
+            <hr width="100%">
+    </div>
+ </body>
+ </html>
